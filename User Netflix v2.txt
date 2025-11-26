@@ -1,0 +1,1608 @@
+﻿# Complete Prompt for Netflix-Style User Panel (OTT Platform)
+
+
+Create a fully functional, professional OTT streaming platform user panel in a single HTML file with the following specifications:
+
+
+## Design Philosophy
+
+
+### Premium Modern Aesthetic
+- **Dark Theme**: Deep blacks (#0a0a0a) with rich accent colors
+- **Glassmorphism Effects**: Subtle blur and transparency
+- **Smooth Animations**: Micro-interactions throughout
+- **Layout Inspiration**: Netflix/Disney+ inspired with modern touches
+- **Gradient Accents**: Purple to Blue (#8b5cf6 → #3b82f6)
+- **Typography**: Inter or Poppins font family
+- **Spacing System**: Consistent 8px spacing
+- **Hover Effects**: Scale (1.05x) and glow effects
+- **Loading States**: Skeleton loading for premium feel
+
+
+### Color Scheme
+- Background: #0a0a0a (Deep Black)
+- Surface: #1a1a1a (Dark Gray)
+- Surface Elevated: #2a2a2a (Lighter Gray)
+- Primary Accent: #8b5cf6 (Purple)
+- Secondary Accent: #3b82f6 (Blue)
+- Success: #10b981 (Green)
+- Warning: #f59e0b (Amber)
+- Error: #ef4444 (Red)
+- Text Primary: #ffffff (White)
+- Text Secondary: #a3a3a3 (Gray)
+
+
+### Gradients & Effects
+- Hero Overlay: linear-gradient(to top, #0a0a0a 0%, transparent 100%)
+- Card Hover: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%)
+- Button Primary: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)
+- Glassmorphism: backdrop-filter: blur(10px); background: rgba(26, 26, 26, 0.7)
+- Shadow: 0 8px 32px rgba(0, 0, 0, 0.4)
+- Glow: 0 0 20px rgba(139, 92, 246, 0.5)
+
+
+## Technical Stack
+
+
+### Firebase Integration
+- **Firebase Authentication**: User login/registration
+- **Firestore Database**: All data storage
+- **URL-Based Images**: All images via URLs (NO Firebase Storage)
+- **Real-time Updates**: Live data synchronization
+
+
+### Performance Features
+- Lazy loading for images
+- Skeleton screens during load
+- Debounced search (300ms)
+- Optimized Firebase queries
+- Client-side caching
+- Progressive image loading
+- Infinite scroll optimization
+
+
+### Responsive Design
+- Mobile-first approach
+- Mobile: < 768px
+- Touch-friendly interface
+
+
+## Complete Feature List (All Must Be Fully Functional)
+
+
+### 1. Authentication & User Profile
+
+
+**Login Page:**
+- Email/Password login with validation
+- Email format validation
+- Password strength indicator
+- Remember me checkbox (localStorage)
+- Forgot password link
+- Register link
+- Show/hide password toggle
+- Loading state during login
+- Error messages display
+- Auto-redirect after successful login
+
+
+**Registration Page:**
+- Full name input (required)
+- Email input with validation
+- Password input with strength meter (min 8 chars, 1 uppercase, 1 number)
+- Confirm password validation
+- Terms & conditions checkbox
+- Already have account link
+- Registration success message
+- Auto-login after registration
+- Email verification sent notification
+
+
+**Forgot Password:**
+- Email input for password reset
+- Send reset link button
+- Success confirmation message
+- Back to login link
+- Firebase password reset email
+
+
+**User Profile Page:**
+- **Profile Header:**
+  - Profile picture (URL-based upload)
+  - Display name (editable inline)
+  - Email address (display only)
+  - Member since date
+  - Total watch time display
+  - Favorite genres display
+
+
+- **Profile Picture Management:**
+  - Current profile picture display with circular frame
+  - Change picture button
+  - URL input for new profile picture
+  - Preview before saving
+  - Default avatar fallback
+  - Save/Cancel buttons
+
+
+- **Account Information Section:**
+  - Display name edit (click to edit, save button)
+  - Email (non-editable, display only)
+  - Phone number (optional, editable)
+  - Date of birth (optional, editable)
+  - Gender selection (optional dropdown)
+  - Bio/About me (textarea, optional)
+
+
+- **Change Password Section:**
+  - Current password input
+  - New password input with strength meter
+  - Confirm new password input
+  - Update password button
+  - Password requirements display
+  - Success/error notifications
+
+
+- **Preferences Section:**
+  - Auto-play next episode/movie (toggle switch)
+  - Auto-play previews on browse (toggle switch)
+  - Data saver mode (toggle switch)
+  - Language preference (dropdown: English, Hindi, Spanish, etc.)
+  - Subtitle language preference (dropdown)
+  - Video quality preference (Auto/High/Medium/Low)
+  - Email notifications (toggle switch)
+  - Push notifications (toggle switch)
+
+
+- **Privacy Settings:**
+  - Watch history visibility (toggle on/off)
+  - Show activity to friends (toggle on/off)
+  - Profile visibility (Public/Private)
+  - Clear all watch history (button with confirmation)
+  - Clear search history (button with confirmation)
+  - Download my data (button)
+
+
+- **Subscription Information:**
+  - Current plan display (Free/Premium)
+  - Plan features list
+  - Upgrade button (if free)
+  - Billing history (if premium)
+  - Next billing date
+  - Cancel subscription option
+
+
+- **Account Management:**
+  - Logout button
+  - Delete account button (with double confirmation)
+  - Deactivate account option
+  - Last login information
+  - Active devices list
+  - Sign out from all devices button
+
+
+- **Statistics Dashboard:**
+  - Total movies watched
+  - Total watch time (hours)
+  - Favorite genre
+  - Most watched category
+  - Watchlist count
+  - Average rating given
+  - Watch streak (consecutive days)
+
+
+### 2. Home Page
+
+
+**Hero Banner Carousel:**
+- Auto-rotating featured movies (5-7 seconds interval)
+- Large backdrop image with gradient overlay
+- Movie title overlay with gradient text
+- Movie description (2-3 lines, fade out)
+- Rating display with stars
+- Duration and year display
+- Primary CTA: "Play" button (large, prominent)
+- Secondary CTA: "More Info" button
+- Cinematic fade transitions between slides
+- Pause rotation on hover
+- Manual navigation dots/arrows
+- Progress indicator bar
+- Mute/Unmute button (if trailer video)
+- Keyboard navigation (arrow keys)
+
+
+**Continue Watching Section:**
+- Horizontal scrollable row
+- Movie/episode thumbnails with progress bar overlay
+- Progress percentage display
+- Resume from last position on click
+- Hover effect with scale (1.05x)
+- "Remove from continue watching" button (X icon on hover)
+- Play icon overlay
+- Time remaining display
+- Last watched timestamp
+- Sort by: Most recent
+
+
+**Trending Now Section:**
+- Horizontal scrollable row with smooth scroll
+- Trending badge/flame icon on thumbnails
+- Movie posters with hover effects
+- Quick info on hover: rating, year, duration
+- Quick play button on hover
+- Add to list button (heart icon)
+- Trending rank number badge (1-10)
+- Auto-scroll option
+
+
+**New Releases Section:**
+- Horizontal scrollable row
+- "New" badge on thumbnails
+- Release date display
+- Hover preview cards with animation
+- Movie information popup on hover
+- Add to list quick action
+- Sort by: Most recent
+
+
+**Popular Movies Section:**
+- Horizontal scrollable row
+- Popularity rank badge
+- View count display
+- Rating stars display
+- Quick preview on hover
+- Play trailer button
+
+
+**Top Rated Section:**
+- Horizontal scrollable row
+- Rating display prominently
+- Number of ratings count
+- Critics rating (if available)
+- Filter: This week, This month, All time
+
+
+**Category Rows (Dynamic):**
+- Action, Drama, Comedy, Thriller, Horror, Romance, Sci-Fi, etc.
+- Each category as separate horizontal row
+- "View All" button for each category
+- Smooth horizontal scroll with arrow buttons
+- Touch/swipe gestures for mobile
+- Hover preview cards with:
+  - Scale effect (1.05x)
+  - Movie title
+  - Rating (stars/numerical)
+  - Year
+  - Duration
+  - Quick play button
+  - Add to list button
+  - Genres as pills
+- Lazy loading as user scrolls
+- Skeleton loading before content loads
+
+
+**Quick Access Shortcuts:**
+- My List shortcut card
+- Continue watching shortcut
+- Browse all shortcut
+- Search shortcut
+
+
+### 3. Browse & Discovery
+
+
+**All Movies Page:**
+- **Grid View:**
+  - Responsive grid (2 columns mobile, 3-4 tablet, )
+  - Movie poster cards
+  - Hover effects with info overlay
+  - Infinite scroll or pagination (20 items per page)
+  - Smooth scroll to top button
+  - Grid/List view toggle
+
+
+- **Filter Sidebar (Collapsible on mobile):**
+  - **By Genre/Category:**
+    - Multi-select checkboxes
+    - All categories from Firestore
+    - Clear filters button
+  - **By Year:**
+    - Year range slider (1900-2025)
+    - Start year and end year inputs
+  - **By Rating:**
+    - Star rating filter (1-5 stars, clickable)
+    - Minimum rating slider
+  - **By Duration:**
+    - Duration range slider (0-300 minutes)
+    - Short (<60), Medium (60-120), Long (>120) quick filters
+  - **By Status:**
+    - Featured checkbox
+    - Trending checkbox
+    - New releases checkbox
+  - **Apply Filters** button
+  - **Reset All Filters** button
+
+
+- **Sort Options (Dropdown):**
+  - Latest (newest first)
+  - Popular (most viewed)
+  - Top Rated (highest rating)
+  - A-Z (alphabetical)
+  - Z-A (reverse alphabetical)
+  - Duration (shortest/longest)
+  - Year (newest/oldest)
+
+
+- **Results Display:**
+  - Total results count
+  - Active filters display as pills (removable)
+  - No results state with suggestions
+  - Loading skeleton during filter/sort
+
+
+**Advanced Search:**
+- **Search Bar (Prominent):**
+  - Real-time search as user types
+  - Search icon with animation
+  - Clear search button (X icon)
+  - Voice search button (optional)
+  - Debounced search (300ms)
+  - Minimum 2 characters to search
+
+
+- **Search Results:**
+  - Results appear in dropdown while typing
+  - Full results page on enter
+  - Movie thumbnails with titles
+  - Highlighting matching text
+  - Search suggestions
+  - "Search for: [query]" option
+  - Recent searches display (max 10)
+  - Clear search history button
+
+
+- **Search History:**
+  - Last 10 searches saved in localStorage
+  - Click to search again
+  - Delete individual search items
+  - Clear all history button
+
+
+**Genre/Category Pages:**
+- Dedicated page for each genre (e.g., /action, /drama)
+- Genre-specific hero banner image
+- Genre title with gradient overlay
+- Genre description
+- Breadcrumb navigation (Home > Action)
+- All movies in that genre (grid view)
+- Sorting options
+- Filter options (year, rating, duration)
+- Sub-genre filters if applicable
+
+
+### 4. Movie Detail Page
+
+
+**Layout:**
+- Full-width backdrop banner with gradient overlay (top to bottom fade)
+- Fixed navigation at top (transparent, becomes solid on scroll)
+
+
+**Movie Information Section:**
+- **Header Area:**
+  - Movie title (large, bold)
+  - Release year in parentheses
+  - Rating display (stars + numerical, e.g., ⭐ 4.5/5)
+  - Total ratings count
+  - Duration (e.g., 2h 15m)
+  - Release date (formatted)
+  - Language
+  - Content rating (PG-13, R, etc.)
+
+
+- **Genres/Categories:**
+  - Genre pills/badges (clickable to browse that genre)
+  - Multiple genres displayed
+
+
+- **Synopsis/Description:**
+  - Full plot description
+  - "Read more/less" toggle if long text
+  - Spoiler warning option
+
+
+- **Cast & Crew:**
+  - Director name with label
+  - Cast list (comma-separated or individual cards)
+  - View full cast link (expandable section)
+  - Cast member photos (circular avatars, if available)
+  - Character names
+
+
+- **Additional Info:**
+  - Production company
+  - Country of origin
+  - Awards/nominations (if any)
+  - Box office (if available)
+
+
+**Action Buttons (Prominent):**
+- **Play Movie** (Primary CTA, standard button with play icon)
+  - Gradient button with glow effect
+  - Opens video player
+- **Add to My List** (Heart icon button)
+  - Filled heart if already in list
+  - Toggle on click with animation
+  - "Added to list" toast notification
+
+
+
+
+**User Interaction Section:**
+- **Your Rating:**
+  - Star rating input (1-5 stars, clickable)
+  - "Rate this movie" prompt if not rated
+  - Display user's rating if already rated
+  - Edit rating option
+  - Rating submitted confirmation
+
+
+- **Comments Section:**
+  - **Comment Count:** Display total comments
+  - **Add Comment:**
+    - User avatar (profile pic)
+    - Text area for comment (max 500 chars)
+    - Character count display
+    - Submit comment button
+    - Cancel button
+    - Emoji picker option
+  - **Comments List:**
+    - User avatar, name, and timestamp
+    - Comment text
+    - Like button with count
+    - Reply button (nested replies, max 1 level)
+    - Edit own comment (3 dots menu)
+    - Delete own comment (with confirmation)
+    - Report comment option
+    - Sort by: Newest, Oldest, Most Liked
+    - Load more button (pagination, 10 per page)
+    - Empty state: "Be the first to comment"
+  - **Comment Moderation:**
+    - Profanity filter (client-side basic filter)
+    - Spam detection (rate limiting)
+    - Edit within 5 minutes of posting
+  - **Reply System:**
+    - Click reply to expand reply box
+    - @username mention in reply
+    - Nested reply display (indented)
+    - Reply count display
+
+
+**Related/Similar Movies Section:**
+- Horizontal scrollable row
+- Movies from same genre
+- Similar rating range
+- Same director/cast (if available)
+- "Because you watched" logic
+- Add to list quick action on hover
+
+
+**More Like This:**
+- Algorithm-based recommendations
+- Grid or horizontal row
+- 6-12 movie suggestions
+
+
+**Video Previews/Clips:**
+- Trailer section
+- Behind the scenes (if available)
+- Clips section
+
+
+### 5. Video Player (Full-Screen Capable)
+
+
+**Custom Styled HTML5 Player:**
+- **Playback Controls:**
+  - Large center play/pause button (click anywhere to toggle)
+  - Play/Pause button (bottom left)
+  - Loading spinner during buffering
+  - Replay button when video ends
+
+
+- **Progress Controls:**
+  - Progress bar with seek functionality
+  - Hover preview thumbnails (if available)
+  - Current time display (MM:SS)
+  - Total duration display (MM:SS)
+  - Time remaining display option
+  - Buffered segments indicator
+  - Draggable playhead
+
+
+- **Audio Controls:**
+  - Volume slider (vertical on hover)
+  - Mute/Unmute button
+  - Volume percentage display
+  - Remember volume preference (localStorage)
+
+
+- **Quality Selector:**
+  - Dropdown menu with available qualities
+  - Auto, 1080p, 720p, 480p, 360p options
+  - Display current quality
+  - Smooth quality switching
+  - Remember quality preference
+
+
+- **Playback Speed:**
+  - Speed selector dropdown
+  - Options: 0.25x, 0.5x, 0.75x, 1x (Normal), 1.25x, 1.5x, 1.75x, 2x
+  - Display current speed
+  - Remember speed preference
+
+
+- **Navigation Controls:**
+  - 10 seconds backward button (double-tap left or click)
+  - 10 seconds forward button (double-tap right or click)
+  - Next episode/movie button (if applicable)
+  - Previous episode button (if applicable)
+
+
+- **Display Controls:**
+  - Fullscreen toggle button
+  - Picture-in-Picture button (mini player)
+  - Theater mode toggle
+  - Rotate screen for mobile
+
+
+- **Keyboard Shortcuts:**
+  - Space: Play/Pause
+  - Left Arrow: Rewind 10s
+  - Right Arrow: Forward 10s
+  - Up Arrow: Volume up
+  - Down Arrow: Volume down
+  - M: Mute/Unmute
+  - F: Fullscreen toggle
+  - Esc: Exit fullscreen
+  - 0-9: Jump to 0%-90% of video
+  - Display keyboard shortcuts help (? key)
+
+
+- **Auto-Hide Controls:**
+  - Controls auto-hide after 3 seconds of inactivity
+  - Show controls on mouse move or touch
+  - Keep controls visible when paused
+  - Smooth fade in/out animations
+
+
+- **Loading States:**
+  - Buffering spinner with message
+  - Loading percentage (if available)
+  - Retry button on error
+  - Error message display
+
+
+- **Error Handling:**
+  - Network error detection
+  - "Video failed to load" message
+  - Retry button
+  - Report issue button
+  - Fallback to lower quality
+
+
+- **Watch Progress Tracking:**
+  - Auto-save watch position every 10 seconds to Firestore
+  - Save on pause, quality change, or exit
+  - Resume prompt on return ("Resume from XX:XX or Start Over")
+  - Visual progress indicator on thumbnails
+  - Sync progress across devices
+
+
+- **Next Episode/Movie Suggestion:**
+  - Show suggestion 30 seconds before end
+  - Auto-play countdown (15 seconds)
+  - Cancel auto-play button
+  - Next episode card with thumbnail and title
+  - "Play Next" button
+
+
+- **Subtitle Support:**
+  - Subtitle toggle button
+  - Subtitle file URL from Firestore
+  - Multiple subtitle languages (if available)
+  - Subtitle size adjustment
+  - Subtitle position adjustment
+  - Subtitle color/style options
+
+
+- **Player Settings Menu:**
+  - Quality
+  - Playback speed
+  - Subtitles
+  - Audio tracks (if multiple)
+  - Report issue
+
+
+- **Mobile Optimizations:**
+  - Touch gestures for volume (swipe up/down left side)
+  - Touch gestures for brightness (swipe up/down right side)
+  - Double-tap left/right for skip
+  - Pinch to zoom
+  - Swipe down to exit fullscreen
+  - Lock screen controls
+  - Orientation lock toggle
+
+
+### 6. Web Series Detail Page
+
+
+**All Movie Detail Features Plus:**
+
+
+**Seasons & Episodes Section:**
+- **Seasons Dropdown/Tabs:**
+  - Season selector (dropdown or tabs)
+  - Season number and title
+  - Episode count per season
+  - Season poster thumbnail
+
+
+- **Episodes List:**
+  - Grid or list view toggle
+  - Episode thumbnail with play icon
+  - Episode number and title
+  - Episode duration
+  - Episode description (expandable)
+  - Episode rating
+  - Watch progress bar on thumbnail
+  - Resume button if partially watched
+  - Download button (if feature enabled)
+  - Add to list option per episode
+  - Release date
+  - "New" badge for recent episodes
+
+
+- **Episode Detail View:**
+  - Click episode for full details
+  - Episode-specific comments
+  - Episode rating
+  - Episode cast (if different from series)
+  - Next/Previous episode navigation
+
+
+### 7. My List (Watchlist)
+
+
+**Personal Watchlist Page:**
+- **Header:**
+  - Page title: "My List"
+  - Total items count
+  - Last updated display
+
+
+- **Display Options:**
+  - Grid view (default)
+  - List view option
+  - Responsive grid (2-6 columns based on screen)
+
+
+- **Sort Options:**
+  - Recently Added (default)
+  - A-Z (alphabetical by title)
+  - Z-A (reverse alphabetical)
+  - Release Date (newest/oldest)
+  - Rating (highest/lowest)
+  - Date Added to List
+
+
+- **Movie Cards:**
+  - Movie poster thumbnail
+  - Movie title overlay
+  - Rating display
+  - Year and duration
+  - Remove from list button (X icon or heart icon filled)
+  - Quick play button on hover
+  - Hover effects (scale 1.05x)
+
+
+- **Actions:**
+  - Bulk select mode (checkbox on each card)
+  - Remove selected items button
+  - Clear all list (with confirmation dialog)
+  - Share my list option
+
+
+- **Empty State:**
+  - Illustration or icon
+  - "Your list is empty" message
+  - "Browse movies to add to your list" subtext
+  - "Browse All" CTA button
+  - Suggested movies to add
+
+
+- **Filters:**
+  - Filter by genre
+  - Filter by added date range
+  - Show movies only / series only toggle
+
+
+### 8. Watch History
+
+
+**Watch History Page:**
+- **Header:**
+  - Page title: "Watch History"
+  - Total items watched count
+  - Total watch time display
+
+
+- **Display:**
+  - Chronological order (most recent first)
+  - Date separators (Today, Yesterday, This Week, Earlier)
+  - Movie/episode thumbnail
+  - Title and episode info (if series)
+  - Watched date and time
+  - Watch duration / total duration
+  - Completion percentage
+  - Resume watching button (if not completed)
+
+
+- **Actions:**
+  - Clear entire history button (with confirmation)
+  - Clear individual items (X icon on hover)
+  - Remove multiple items (bulk select)
+  - Hide from history option
+  - Pause history tracking toggle (in settings)
+
+
+- **Filters:**
+  - Filter by date range
+  - Filter by completed/incomplete
+  - Filter by movies/series
+  - Search within history
+
+
+- **Privacy:**
+  - Toggle watch history visibility (affects recommendations)
+  - Download history as CSV
+  - Auto-delete history after X days option
+
+
+### 9. Search Page (Dedicated)
+
+
+**Search Interface:**
+- Large search bar at top
+- Search icon and clear button
+- Voice search button
+- Recent searches 
+Secure logout (clear all tokens)
+- Password strength validation
+
+
+### 20. Progressive Web App (PWA) Features
+
+
+**Installability:**
+- Add to home screen prompt
+- App-like experience
+- Standalone display mode
+- Custom splash screen
+
+
+**Offline Support (Optional):**
+- Service worker registration
+- Cache static assets
+- Offline page display
+- Network status indicator
+
+
+**Native Features:**
+- Push notifications (with user permission)
+- Share API integration
+- Vibration API for feedback
+- Screen wake lock during video playback
+
+
+### 21. Accessibility (A11y)
+
+
+**ARIA Labels:**
+- Proper ARIA labels on all interactive elements
+- Screen reader friendly
+- Semantic HTML5 elements
+- Alt text for all images
+
+
+**Keyboard Navigation:**
+- Tab order optimization
+- Focus indicators visible
+- Skip to content link
+- Escape key to close modals
+
+
+**Visual Accessibility:**
+- High contrast text
+- Sufficient font sizes (minimum 16px body)
+- Focus outlines on interactive elements
+- No animation for users who prefer reduced motion
+
+
+### 22. Analytics & Tracking (Client-Side)
+
+
+**User Behavior:**
+- Track page views
+- Track video plays/pauses
+- Track search queries
+- Track add to list actions
+- Track watch completion
+- Time on page
+
+
+**Content Analytics:**
+- Most viewed content
+- Most added to list
+- Most searched terms
+- Drop-off points in videos
+- Average watch time
+
+
+### 23. Social Features
+
+
+**Sharing:**
+- Share movie/series to social media
+- Copy shareable link
+- Share watch progress (optional)
+- Share reviews/ratings
+
+
+**Activity Feed (Optional):**
+- What friends are watching (if implemented)
+- Friend recommendations
+- Social watch together (future feature placeholder)
+
+
+### 24. Video Player Advanced Features
+
+
+**Quality Switching:**
+- Adaptive bitrate streaming simulation
+- Manual quality selection
+- Quality indicator badge
+- Seamless switching without buffering pause
+
+
+**Chromecast Support (Simulation):**
+- Cast button display
+- "Playing on [Device]" indicator
+- Cast controls
+
+
+**AirPlay Support (Simulation):**
+- AirPlay button for Apple devices
+- Device selection display
+
+
+**Playback Analytics:**
+- Buffer events tracking
+- Quality switches tracking
+- Completion rate
+- Average watch percentage
+
+
+### 25. Content Discovery Algorithms
+
+
+**Recommendations Engine:**
+- Based on watch history
+- Based on ratings given
+- Based on genres in watchlist
+- Similar content suggestions
+- "Because you watched X" sections
+
+
+**Trending Algorithm:**
+- Views in last 24 hours weighted
+- Rating weighted
+- New releases boosted
+- Engagement metrics (likes, comments)
+
+
+**Personalization:**
+- Personalized homepage rows
+- Genre preferences from watch history
+- Time-based recommendations (continue watching at top in evening)
+
+
+### 26. Advanced Search Features
+
+
+**Auto-Complete:**
+- Suggest titles as user types
+- Suggest actors/directors
+- Suggest genres
+- Recent searches
+- Popular searches
+
+
+**Search Filters:**
+- Combine multiple filters
+- Save filter preferences
+- Quick filter pills (Trending, New, Top Rated)
+
+
+**Search Results:**
+- Grouped by type (Movies, Series, People)
+- Relevance sorting
+- Highlight matching text
+- Search result count
+
+
+### 27. UI Components & Elements
+
+
+**Buttons:**
+- Primary button (gradient with glow)
+- Secondary button (outline)
+- Icon buttons (circular)
+- Floating action button
+- Button loading states
+- Disabled button states
+
+
+**Cards:**
+- Movie/series card (vertical poster)
+- Horizontal card (with backdrop)
+- Featured card (large)
+- Episode card (landscape)
+- User card
+- Notification card
+
+
+**Modals:**
+- Full-screen modal (mobile)
+- Centered modal (desktop)
+- Bottom sheet (mobile)
+- Confirmation dialog
+- Image preview modal
+- Video preview modal
+
+
+**Forms:**
+- Text inputs with floating labels
+- Password inputs with show/hide toggle
+- Email inputs with validation
+- Textarea with character count
+- Checkbox styled
+- Radio buttons styled
+- Toggle switches (iOS style)
+- Select dropdowns styled
+- Multi-select with chips
+- Date picker styled
+- Range sliders styled
+- Star rating input
+- Color picker (for preferences)
+
+
+**Navigation:**
+- Breadcrumb navigation
+- Tab navigation
+- Pagination controls
+- Infinite scroll indicator
+- Back to top button (appears on scroll)
+- Progress bar on page top (for loading states)
+
+
+**Feedback:**
+- Toast notifications (top-right or bottom)
+- Success toast (green with checkmark)
+- Error toast (red with X)
+- Warning toast (amber)
+- Info toast (blue)
+- Loading toast with spinner
+- Toast queue management
+- Toast auto-dismiss (5 seconds)
+- Toast dismiss button
+
+
+**Loaders:**
+- Skeleton loaders for cards
+- Shimmer effect
+- Spinner loaders (circular)
+- Progress bars
+- Loading dots animation
+- Full-page loader
+
+
+**Icons:**
+- Use Unicode symbols or inline SVG
+- Play, Pause, Forward, Backward
+- Heart (filled/outline for watchlist)
+- Star (filled/outline for rating)
+- Search, Filter, Sort
+- Menu, Close, Back
+- User, Settings, Notifications
+- Share, Download, More (3 dots)
+- Check, X, Plus, Minus
+- Home, Browse, List
+- Volume, Mute, Fullscreen
+
+
+**Badges:**
+- Notification count badge (red circle)
+- "New" badge (green)
+- "Trending" badge (orange flame)
+- "Featured" badge (gold star)
+- "HD" / "4K" quality badge
+- Rating badge
+
+
+**Overlays:**
+- Image overlays with gradient
+- Video controls overlay
+- Modal backdrop (dark with blur)
+- Loading overlay
+
+
+**Lists:**
+- Vertical list with dividers
+- Horizontal scrollable list
+- Grid list responsive
+- Nested lists (comments with replies)
+
+
+**Headers:**
+- Sticky header (transparent, becomes solid on scroll)
+- Page headers with back button
+- Section headers
+
+
+**Footers:**
+- Footer with links (About, Contact, Terms, Privacy)
+- Social media icons
+- Copyright notice
+- Language selector
+
+
+### 28. Animation Specifications
+
+
+**Page Transitions:**
+- Fade in on load (0.3s)
+- Slide in from bottom for modals (0.3s)
+- Slide out for page navigation
+
+
+**Hover Animations:**
+- Scale up (1.05x, 0.2s ease)
+- Glow effect (box-shadow transition)
+- Opacity change (0.2s)
+
+
+**Click/Tap Feedback:**
+- Ripple effect on buttons
+- Scale down slightly (0.95x)
+- Color change
+
+
+**Loading Animations:**
+- Skeleton shimmer (1.5s infinite)
+- Spinner rotation (1s infinite linear)
+- Pulse effect for loading elements
+
+
+**Scroll Animations:**
+- Fade in on scroll (Intersection Observer)
+- Slide up on scroll
+- Parallax effect on hero banners
+
+
+**Icon Animations:**
+- Heart fill animation on like
+- Star fill animation on rate
+- Checkmark animation on success
+
+
+**Transition Timing:**
+- Fast: 0.1s - 0.2s (button feedback)
+- Normal: 0.3s - 0.4s (modals, page elements)
+- Slow: 0.5s - 0.8s (page transitions, complex animations)
+
+
+### 29. Code Structure & Organization
+
+
+**HTML Structure:**
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Clone - Streaming Platform</title>
+    
+    <!-- Meta tags for SEO and PWA -->
+    <meta name="description" content="Watch unlimited movies and TV shows">
+    <meta name="theme-color" content="#0a0a0a">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <!-- Chart.js for analytics (if needed) -->
+    
+    <style>
+        /* CSS Variables */
+        /* Reset & Base Styles */
+        /* Layout Components */
+        /* Navigation */
+        /* Hero Section */
+        /* Content Rows */
+        /* Cards */
+        /* Modals */
+        /* Forms */
+        /* Video Player */
+        /* Buttons */
+        /* Animations */
+        /* Responsive Media Queries */
+    </style>
+</head>
+<body>
+    <!-- App Container -->
+    <div id="app">
+        <!-- Login/Register Page (shown first if not authenticated) -->
+        <!-- Main App (shown after authentication) -->
+            <!-- Navigation Bar -->
+            <!-- Main Content Area -->
+            <!-- Bottom Navigation (Mobile) -->
+            <!-- Modals Container -->
+            <!-- Toast Container -->
+    </div>
+    
+    <script>
+        // Firebase Configuration
+        // Global State Management
+        // Authentication Functions
+        // Firestore Database Functions
+        // UI Rendering Functions
+        // Video Player Logic
+        // Navigation Logic
+        // Event Listeners
+        // Utility Functions
+        // Initialization
+    </script>
+</body>
+</html>
+```
+
+
+**JavaScript Organization:**
+```javascript
+// 1. Firebase Configuration & Initialization
+const firebaseConfig = { /* ... */ };
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+
+// 2. Global State
+const state = {
+    currentUser: null,
+    currentPage: 'home',
+    movies: [],
+    categories: [],
+    watchlist: [],
+    watchHistory: [],
+    notifications: [],
+    selectedMovie: null,
+    videoPlayerState: {},
+    searchQuery: '',
+    filters: {}
+};
+
+
+// 3. Authentication Functions
+async function login(email, password) { /* ... */ }
+async function register(name, email, password) { /* ... */ }
+async function logout() { /* ... */ }
+async function resetPassword(email) { /* ... */ }
+function onAuthStateChanged() { /* ... */ }
+
+
+// 4. Database Functions
+async function fetchMovies() { /* ... */ }
+async function fetchMovie(id) { /* ... */ }
+async function addToWatchlist(movieId) { /* ... */ }
+async function removeFromWatchlist(movieId) { /* ... */ }
+async function saveWatchProgress(movieId, progress) { /* ... */ }
+async function addComment(movieId, commentText) { /* ... */ }
+async function rateMovie(movieId, rating) { /* ... */ }
+
+
+// 5. UI Rendering Functions
+function renderHomePage() { /* ... */ }
+function renderMovieDetail(movieId) { /* ... */ }
+function renderWatchlist() { /* ... */ }
+function renderVideoPlayer(movieId) { /* ... */ }
+function renderProfile() { /* ... */ }
+
+
+// 6. Component Functions
+function createMovieCard(movie) { /* ... */ }
+function createHeroCarousel(featuredMovies) { /* ... */ }
+function createContentRow(title, movies) { /* ... */ }
+function createModal(content) { /* ... */ }
+function showToast(message, type) { /* ... */ }
+
+
+// 7. Video Player
+function initializeVideoPlayer(movieId, videoUrl) { /* ... */ }
+function setupPlayerControls() { /* ... */ }
+function handlePlayPause() { /* ... */ }
+function handleSeek() { /* ... */ }
+function handleFullscreen() { /* ... */ }
+
+
+// 8. Navigation
+function navigate(page, params) { /* ... */ }
+function updateNavigation() { /* ... */ }
+
+
+// 9. Event Handlers
+function handleSearch(query) { /* ... */ }
+function handleFilter(filters) { /* ... */ }
+function handleSort(sortBy) { /* ... */ }
+
+
+// 10. Utilities
+function formatDuration(minutes) { /* ... */ }
+function formatDate(timestamp) { /* ... */ }
+function debounce(func, delay) { /* ... */ }
+function showLoader() { /* ... */ }
+function hideLoader() { /* ... */ }
+
+
+// 11. Initialization
+document.addEventListener('DOMContentLoaded', init);
+```
+
+
+### 30. Comments System Detailed Specification
+
+
+**Comment Structure in Firestore:**
+```javascript
+comments: {
+    id: "comment_123",
+    user_id: "user_456",
+    user_name: "John Doe",
+    user_avatar: "https://...",
+    content_id: "movie_789",
+    content_type: "movie", // or "series" or "episode"
+    comment_text: "Great movie!",
+    likes_count: 15,
+    parent_comment_id: null, // null for top-level, or ID for replies
+    created_at: Timestamp,
+    updated_at: Timestamp,
+    edited: false,
+    reported: false
+}
+```
+
+
+**Comment UI Features:**
+- Display user avatar (circular, 40px)
+- Display user name (bold, clickable to profile if implemented)
+- Display relative time ("2 hours ago", "3 days ago")
+- Display "Edited" indicator if edited
+- Comment text (allow line breaks, max 500 chars)
+- Like button with count
+- Reply button
+- More options menu (3 dots):
+  - Edit (only own comments, within 5 min)
+  - Delete (only own comments, with confirmation)
+  - Report (for others' comments)
+
+
+**Reply System:**
+- Click reply opens textarea below comment
+- Shows parent comment context
+- @username automatically added
+- Max 1 level of nesting (replies to replies are treated as replies to parent)
+- Cancel button to close reply box
+- Reply count shown on parent comment
+
+
+**Real-time Comments:**
+- Listen for new comments with Firestore onSnapshot
+- Auto-prepend new comments to list
+- Show "New comments available" button if user scrolled down
+- Animate new comments entrance
+
+
+**Comment Moderation:**
+- Basic profanity filter (word list check)
+- Character limit enforcement (500 chars)
+- Rate limiting (max 5 comments per minute)
+- Spam detection (prevent duplicate comments)
+
+
+**Comment Likes:**
+- Toggle like with animation
+- Store in separate collection for scalability
+- Update likes_count in comment document
+- Show if current user liked (filled/outline heart)
+
+
+### 31. User Profile Statistics
+
+
+**Statistics to Display:**
+- **Account Age:** "Member since [Month Year]"
+- **Total Watch Time:** "[X] hours watched"
+- **Movies Watched:** Count of completed movies
+- **Series Watched:** Count of completed series
+- **Episodes Watched:** Total episode count
+- **Favorite Genre:** Most watched genre
+- **Average Rating Given:** Average of user's ratings
+- **Watchlist Size:** Number of items in list
+- **Comments Posted:** Total comment count
+- **Watch Streak:** Consecutive days with activity
+- **Badges/Achievements:** (optional gamification)
+  - "Early Adopter" - Joined in first month
+  - "Binge Watcher" - Watched 10 movies in a day
+  - "Critic" - Posted 50 comments
+  - "Devoted Fan" - 30-day watch streak
+
+
+**Visual Representation:**
+- Use cards with icons
+- Use progress bars for goals
+- Use charts for genre distribution
+- Use badges/icons for achievements
+
+
+### 32. Notification System Details
+
+
+**Notification Trigger Events:**
+1. **New Content:**
+   - Movie/series added in favorite genre
+   - New episode of series in watchlist
+   
+2. **Engagement:**
+   - Someone replies to your comment
+   - Someone likes your comment
+   - Movie in watchlist is now available
+
+
+3. **System:**
+   - Welcome notification on signup
+   - Account security alerts
+   - Feature announcements
+   - Maintenance schedules
+
+
+4. **Personalized:**
+   - Recommendations based on watch history
+   - Continue watching reminders
+   - Watchlist reminders
+
+
+**Notification Display:**
+- Badge count on bell icon
+- Dropdown panel from bell icon
+- Unread highlighted with accent color
+- Group similar notifications
+- Expandable for details
+- Swipe to dismiss (mobile)
+- Auto-mark as read when clicked
+
+
+### 33. Error Handling & User Feedback
+
+
+**Error Types & Messages:**
+
+
+**Network Errors:**
+- "Unable to connect. Check your internet connection."
+- Retry button
+- Offline mode message
+
+
+**Authentication Errors:**
+- "Invalid email or password" (login)
+- "Email already in use" (registration)
+- "Weak password. Use at least 8 characters" (registration)
+- "Session expired. Please login again"
+
+
+**Database Errors:**
+- "Failed to load content. Please try again."
+- "Failed to save. Please try again."
+- Automatic retry (up to 3 times)
+
+
+**Video Player Errors:**
+- "Video failed to load"
+- "This video is not available"
+- "Quality not available"
+- Fallback to lower quality option
+
+
+**Form Validation Errors:**
+- Display inline below input field
+- Red border on invalid input
+- Specific error message
+- Real-time validation on blur
+
+
+**Success Messages:**
+- "Added to your list" (watchlist)
+- "Comment posted successfully"
+- "Profile updated"
+- "Password changed successfully"
+- Auto-dismiss after 3 seconds
+
+
+### 34. Mobile-Specific Optimizations
+
+
+**Touch Interactions:**
+- Minimum touch target: 44x44px
+- Swipe to navigate horizontal rows
+- Pull down to refresh
+- Tap to show/hide video controls
+- Long press for context menu
+- Double-tap to like/favorite
+
+
+**Mobile Navigation:**
+- Bottom navigation bar (fixed)
+- Sticky header on scroll
+- Collapsible filters (drawer style)
+- Full-screen modals
+- Bottom sheets for options
+
+
+**Performance:**
+- Reduce image quality on mobile data
+- Data saver mode reduces video quality
+- Limit initial load to 10 items
+- Lazy load images below fold
+- Defer non-critical JavaScript
+
+
+**Layout Adjustments:**
+- 2-column grid for movies
+- Single column for detailed views
+- Larger touch targets
+- Simplified header on mobile
+- Hide less important info on small screens
+
+
+### 35. Desktop-Specific Enhancements
+
+
+**Hover States:**
+- Movie card preview on hover (expand with info)
+- Show play button on hover
+- Thumbnail video preview on hover (if available)
+- Tooltip displays on hover
+
+
+**Keyboard Shortcuts:**
+- "/" to focus search
+- Ctrl+K to open command palette (optional)
+- Arrow keys to navigate content rows
+- Enter to select/play
+- Esc to close modals/player
+
+
+**Multi-Column Layouts:**
+- 5-6 columns for movie grids
+- Sidebar filters always visible
+- Split view for video player + details
+
+
+**Enhanced Features:**
+- Picture-in-picture video player
+- Multiple windows support
+- Right-click context menus
+- Drag and drop for lists
+
+
+### 36. Content Loading Strategy
+
+
+**Initial Page Load:**
+1. Load critical CSS inline
+2. Load Firebase SDK
+3. Check authentication state
+4. Load user preferences from localStorage
+5. Fetch hero carousel data (5 items)
+6. Fetch first 3 content rows (10 items each)
+7. Show skeleton loaders for rest
+
+
+**Infinite Scroll:**
+- Load more when user reaches 80% of scroll
+- Load 10-20 items per batch
+- Show loading indicator at bottom
+- Handle end of content gracefully
+
+
+**Image Loading:**
+- Use Intersection Observer
+- Load images when 200px from viewport
+- Blur placeholder while loading
+- Fade in when loaded
+
+
+**Data Caching:**
+- Cache fetched movies for 1 hour (localStorage)
+- Cache user preferences indefinitely
+- Cache categories indefinitely
+- Clear cache on logout
+
+
+### 37. Final Production Checklist
+
+
+✅ All authentication flows working
+✅ All pages rendering correctly
+✅ Video player fully functional
+✅ Comments system operational
+✅ Search working with filters
+✅ Watchlist add/remove working
+✅ Watch history tracking
+✅ User profile complete
+✅ Notifications system working
+✅ Responsive on all devices
+✅ All animations smooth (60fps)
+✅ Loading states everywhere
+✅ Error handling comprehensive
+✅ Toast notifications working
+✅ Firebase queries optimized
+✅ Images lazy loading
+✅ No console errors
+✅ No dummy/placeholder data
+✅ Professional UI/UX throughout
+✅ Dark theme consistent
+✅ Accessibility features implemented
+✅ Performance optimized
+✅ Security measures in place
+
+
+---
+
+
+## Summary
+
+
+Create a **single, self-contained HTML file** that includes:
+- Complete Netflix/Disney+ inspired dark theme UI
+- Firebase authentication and Firestore integration
+- Fully functional video player with all controls
+- Real-time comments system with replies and likes
+- Complete user profile with statistics and settings
+- Search with filters and sorting
+- Watchlist and watch history
+- Notifications system
+- Responsive design (mobile-first)
+- Smooth animations and transitions
+- Professional OTT platform experience
+- Every feature 100% operational
+- No dummy data or placeholders
+- URL-based images only
+- Optimized performance with lazy loading
+- Error handling and user feedback
+- Skeleton loaders and micro-interactions
+
+
+**The result should be a production-ready, professional streaming platform that users can immediately use to browse, search, watch, and interact with content - matching the quality and feel of major OTT platforms like Netflix, Disney+, and Amazon Prime Video.**
