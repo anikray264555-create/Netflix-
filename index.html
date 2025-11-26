@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Clone - Streaming Platform</title>
+
+    <!-- Meta tags for SEO and PWA -->
+    <meta name="description" content="Watch unlimited movies and TV shows">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --color-background: #0a0a0a;
+            --color-surface: #1a1a1a;
+            --color-surface-elevated: #2a2a2a;
+            --color-primary-accent: #8b5cf6;
+            --color-secondary-accent: #3b82f6;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #a3a3a3;
+
+            --gradient-hero-overlay: linear-gradient(to top, #0a0a0a 0%, transparent 100%);
+            --gradient-card-hover: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+            --gradient-button-primary: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+
+            --font-family: 'Poppins', sans-serif;
+            --spacing-unit: 8px;
+
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --glow: 0 0 20px rgba(139, 92, 246, 0.5);
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+        }
+
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        button {
+            font-family: inherit;
+            border: none;
+            cursor: pointer;
+            background: none;
+            color: inherit;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-surface-elevated);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary-accent);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Layout */
+        #app {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .page {
+            width: 100%;
+            padding: calc(var(--spacing-unit) * 8) calc(var(--spacing-unit) * 4);
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 4);
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: background var(--transition-normal);
+        }
+
+        .main-nav.scrolled {
+            background: var(--color-background);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary-accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 3);
+        }
+
+        .nav-link {
+            transition: color var(--transition-fast);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--color-primary-accent);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 3);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: var(--spacing-unit) calc(var(--spacing-unit) * 2);
+            border-radius: calc(var(--spacing-unit) / 2);
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+
+        .btn-primary {
+            background: var(--gradient-button-primary);
+            color: var(--color-text-primary);
+            box-shadow: var(--glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.7);
+        }
+
+        /* Auth Pages */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: calc(var(--spacing-unit) * 2);
+        }
+
+        .auth-form {
+            background: var(--color-surface);
+            padding: calc(var(--spacing-unit) * 4);
+            border-radius: var(--spacing-unit);
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+        }
+
+        .auth-form h2 {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .form-group {
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-unit);
+            color: var(--color-text-secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: var(--spacing-unit) calc(var(--spacing-unit) * 1.5);
+            background: var(--color-surface-elevated);
+            border: 1px solid transparent;
+            border-radius: calc(var(--spacing-unit) / 2);
+            color: var(--color-text-primary);
+            transition: border-color var(--transition-fast);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-primary-accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: calc(var(--spacing-unit) * 8);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-hero-overlay);
+        }
+
+        .hero-content {
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 700;
+        }
+
+        /* Content Rows */
+        .content-row {
+            margin-bottom: calc(var(--spacing-unit) * 4);
+        }
+
+        .content-row h2 {
+            font-size: 24px;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .movie-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: calc(var(--spacing-unit) * 2);
+            padding-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .movie-carousel::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        /* Movie Card */
+        .movie-card {
+            flex-shrink: 0;
+            width: 200px;
+            border-radius: var(--spacing-unit);
+            overflow: hidden;
+            position: relative;
+            transition: transform var(--transition-normal);
+        }
+
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .movie-card-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: var(--spacing-unit);
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page {
+                padding: calc(var(--spacing-unit) * 6) calc(var(--spacing-unit) * 2);
+            }
+
+            .nav-links {
+                display: none; /* Simplistic mobile nav */
+            }
+
+            .hero-content h1 {
+                font-size: 32px;
+            }
+
+            .movie-card {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- App Container -->
+    <div id="app">
+        <!-- Authentication Pages -->
+        <div id="auth-page" class="auth-container">
+            <div id="login-form" class="auth-form">
+                <h2>Login</h2>
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button id="login-btn" class="btn btn-primary" style="width:100%">Login</button>
+                <p style="text-align: center; margin-top: 20px;">
+                    Need an account? <a href="#" id="show-register">Register</a> | <a href="#" id="show-forgot">Forgot Password?</a>
+                </p>
+            </div>
+
+            <div id="register-form" class="auth-form hidden">
+                <h2>Register</h2>
+                 <div class="form-group">
+                    <label for="register-name">Full Name</label>
+                    <input type="text" id="register-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <button id="register-btn" class="btn btn-primary" style="width:100%">Register</button>
+                 <p style="text-align: center; margin-top: 20px;">
+                    Already have an account? <a href="#" id="show-login">Login</a>
+                </p>
+            </div>
+
+            <div id="forgot-form" class="auth-form hidden">
+                <h2>Forgot Password</h2>
+                <div class="form-group">
+                    <label for="forgot-email">Email</label>
+                    <input type="email" id="forgot-email" required>
+                </div>
+                <button id="forgot-btn" class="btn btn-primary" style="width:100%">Send Reset Link</button>
+                <p style="text-align: center; margin-top: 20px;">
+                    <a href="#" id="back-to-login">Back to Login</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Main App Content (Initially Hidden) -->
+        <div id="main-app" class="hidden">
+            <nav class="main-nav">
+                <div class="logo">STREAM</div>
+                <div class="nav-links">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#browse" class="nav-link">Browse</a>
+                    <a href="#mylist" class="nav-link">My List</a>
+                </div>
+                <div class="nav-right">
+                    <button id="logout-btn" class="btn">Logout</button>
+                </div>
+            </nav>
+
+            <main>
+                <div id="home-page" class="page">
+                    <section class="hero" style="background-image: url('https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=800');">
+                        <div class="hero-content">
+                            <h1>Movie Title</h1>
+                            <p>A brief description of the featured movie.</p>
+                            <button class="btn btn-primary">Play</button>
+                        </div>
+                    </section>
+
+                    <section class="content-row">
+                        <h2>Trending Now</h2>
+                        <div class="movie-carousel">
+                            <!-- Movie cards will be dynamically inserted here -->
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Other pages will be added here -->
+                 <div id="browse-page" class="page hidden">
+                    <h2>Browse All</h2>
+                    <!-- Filters and movie grid will go here -->
+                </div>
+
+                <div id="mylist-page" class="page hidden">
+                    <h2>My List</h2>
+                    <!-- Watlist grid will go here -->
+                </div>
+
+                <div id="movie-detail-page" class="page hidden">
+                   <!-- Movie details will be dynamically populated here -->
+                </div>
+            </main>
+
+             <!-- Video Player -->
+            <div id="video-player-container" class="hidden">
+                <!-- Custom video player will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // App state
+            const state = {
+                isLoggedIn: false,
+                currentPage: 'home',
+            };
+
+            // Page Elements
+            const authPage = document.getElementById('auth-page');
+            const mainApp = document.getElementById('main-app');
+            const pages = {
+                home: document.getElementById('home-page'),
+                browse: document.getElementById('browse-page'),
+                mylist: document.getElementById('mylist-page'),
+                movieDetail: document.getElementById('movie-detail-page'),
+            };
+
+            // Auth Form Elements
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const forgotForm = document.getElementById('forgot-form');
+
+            // Auth Buttons & Links
+            const showRegisterLink = document.getElementById('show-register');
+            const showLoginLink = document.getElementById('show-login');
+            const showForgotLink = document.getElementById('show-forgot');
+            const backToLoginLink = document.getElementById('back-to-login');
+            const loginBtn = document.getElementById('login-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+
+            // Navigation Links
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            // --- AUTH FORM SWITCHING ---
+            showRegisterLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+            });
+
+            showLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                registerForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+            });
+
+            showForgotLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginForm.classList.add('hidden');
+                forgotForm.classList.remove('hidden');
+            });
+
+            backToLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                forgotForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+            });
+
+
+            // --- LOGIN / LOGOUT LOGIC ---
+            function updateUIForAuthState() {
+                if (state.isLoggedIn) {
+                    authPage.classList.add('hidden');
+                    mainApp.classList.remove('hidden');
+                } else {
+                    authPage.classList.remove('hidden');
+                    mainApp.classList.add('hidden');
+                }
+            }
+
+            loginBtn.addEventListener('click', () => {
+                // Simulate login
+                state.isLoggedIn = true;
+                updateUIForAuthState();
+            });
+
+            logoutBtn.addEventListener('click', () => {
+                state.isLoggedIn = false;
+                updateUIForAuthState();
+            });
+
+            // --- NAVIGATION LOGIC ---
+            function navigateTo(page) {
+                // Hide all pages
+                Object.values(pages).forEach(p => p.classList.add('hidden'));
+                // Show the target page
+                if(pages[page]) {
+                    pages[page].classList.remove('hidden');
+                    state.currentPage = page;
+                }
+
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('href') === `#${page}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = e.target.getAttribute('href').substring(1);
+                    navigateTo(page);
+                });
+            });
+
+
+            // --- DYNAMIC CONTENT RENDERING ---
+            const sampleMovies = [
+                { title: 'Movie 1', image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400' },
+                { title: 'Movie 2', image: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400' },
+                { title: 'Movie 3', image: 'https://images.unsplash.com/photo-1627871629249-01e9538e12a4?w=400' },
+                { title: 'Movie 4', image: 'https://images.unsplash.com/photo-1542204165-65bf26472b9b?w=400' },
+                { title: 'Movie 5', image: 'https://images.unsplash.com/photo-1512149177596-f817c7ef5d4c?w=400' },
+            ];
+
+            function createMovieCard(movie) {
+                const card = document.createElement('div');
+                card.className = 'movie-card';
+                card.innerHTML = `
+                    <img src="${movie.image}" alt="${movie.title}">
+                    <div class="movie-card-overlay">
+                        <h4>${movie.title}</h4>
+                    </div>
+                `;
+                return card;
+            }
+
+            function renderMovieCarousels() {
+                const carousel = document.querySelector('.movie-carousel');
+                sampleMovies.forEach(movie => {
+                    carousel.appendChild(createMovieCard(movie));
+                });
+            }
+
+
+            // --- INITIALIZATION ---
+            function init() {
+                updateUIForAuthState();
+                navigateTo('home');
+                renderMovieCarousels();
+            }
+
+            init();
+
+        });
+    </script>
+</body>
+</html>
